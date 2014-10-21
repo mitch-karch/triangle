@@ -1,0 +1,12 @@
+<html>
+    <head>
+        <script src="d3.min.js"></script> 
+        <script src="trianglify.js"></script>
+
+        <script type="text/javascript">
+            var t = new Trianglify();
+            var pattern = t.generate(1920,1080);
+            document.write(pattern.dataUrl);
+        </script>
+    </head>
+</html>
