@@ -3,10 +3,15 @@
         <script src="d3.min.js"></script> 
         <script src="trianglify.js"></script>
 
+    </head>
+    <body>
+    <div id="content"></div>
         <script type="text/javascript">
             var t = new Trianglify();
             var pattern = t.generate(1920,1080);
-            document.write(pattern.dataUrl);
+//            document.write(pattern.dataUrl);
+            document.getElementById("content").innerHTML = pattern.dataUrl;
         </script>
-    </head>
+
+    </body>
 </html>
