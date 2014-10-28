@@ -1,4 +1,4 @@
-import sys
+import sys,re
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 from PyQt4.QtWebKit import *
@@ -23,8 +23,8 @@ def getHtml(str_url):
     return html
 
 webGenServer = "http://pseudopri.me/triangle"
-
 html = getHtml(webGenServer)
+rawData = str(re.search(r",.+\)",html).group(0))
+newBackground = rawData.strip(',').strip(')')
 
-print str(html)
 
