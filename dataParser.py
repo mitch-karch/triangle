@@ -26,7 +26,7 @@ webGenServer = "http://pseudopri.me/triangle"
 html = getHtml(webGenServer)
 rawData = str(re.search(r",.+\)",html).group(0))
 newBackground = base64.decodestring(rawData.strip(',').strip(')'))
-f = open("temp.svg", "w")
+f = open("temp.png", "w")
 f.write(newBackground)
 f.close()
 
