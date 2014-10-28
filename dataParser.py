@@ -22,7 +22,7 @@ def getHtml(str_url):
  
     return html
 
-webGenServer = "http://pseudopri.me/triangle"
+webGenServer = "webgen/webapp.html"
 html = getHtml(webGenServer)
 rawData = str(re.search(r",.+\)",html).group(0))
 newBackground = rawData.strip(',').strip(')')
