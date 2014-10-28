@@ -1,4 +1,4 @@
-import sys,re
+import sys,re, base64
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 from PyQt4.QtWebKit import *
@@ -25,6 +25,8 @@ def getHtml(str_url):
 webGenServer = "webgen/webapp.html"
 html = getHtml(webGenServer)
 rawData = str(re.search(r",.+\)",html).group(0))
-newBackground = rawData.strip(',').strip(')')
-
+newBackground = base64.decodestring(rawData.strip(',').strip(')'))
+f = open("temp.png", "w")
+f.write(newBackground)
+f.close()
 
