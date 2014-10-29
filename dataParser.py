@@ -24,8 +24,11 @@ def getHtml(str_url):
 
 webGenServer = "webgen/webapp.html"
 html = getHtml(webGenServer)
-rawData = str(re.search(r",.+\)",html).group(0))
-newBackground = base64.decodestring(rawData.strip(',').strip(')'))
+print(html)
+
+rawData = str(re.search(r"<div.*>(.*)<\/div>",html).group(1))
+rawData = rawData.strip('data:image/png;base64,')
+newBackground = base64.decodestring(rawData)
 f = open("temp.png", "w")
 f.write(newBackground)
 f.close()
