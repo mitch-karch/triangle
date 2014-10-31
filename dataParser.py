@@ -19,17 +19,14 @@ class Render(QWebPage):
 def getHtml(str_url):
     r_html = Render(str_url)  
     html = r_html.frame.toHtml()
- 
     return html
 
 webGenServer = "webgen/webapp.html"
 html = getHtml(webGenServer)
-print(html)
 
-rawData = str(re.search(r"<div.*>(.*)<\/div>",html).group(1))
-rawData = rawData.strip('data:image/png;base64,')
+rawData = str(re.search(r"<div.*>(.*,)(.*)<\/div>",html).group(2))
 newBackground = base64.decodestring(rawData)
-f = open("temp.png", "w")
+f = open("temp.svg", "w")
 f.write(newBackground)
 f.close()
 
