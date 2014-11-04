@@ -1,4 +1,5 @@
 import sys,re, base64
+import svg_to_png
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 from PyQt4.QtWebKit import *
@@ -21,12 +22,15 @@ def getHtml(str_url):
     html = r_html.frame.toHtml()
     return html
 
+#generate a website to use the d3.js code to make the trianglify app.
+#Save the generated image in temp.svg
 webGenServer = "webgen/webapp.html"
 html = getHtml(webGenServer)
-
 rawData = str(re.search(r"<div.*>(.*,)(.*)<\/div>",html).group(2))
 newBackground = base64.decodestring(rawData)
 f = open("temp.svg", "w")
 f.write(newBackground)
 f.close()
 
+#convert to png from orangepalantir
+svg_to_png.main("temp.svg")

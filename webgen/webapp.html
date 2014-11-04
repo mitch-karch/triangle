@@ -11,22 +11,7 @@
         var patternHeight= 1080;
         var t = new Trianglify();
         var pattern = t.generate(patternWidth,patternHeight);
-        var canvas = document.createElement("canvas");
-        var ctx = canvas.getContext('2d');
-        var s = new Image();
-        document.getElementsByTagName('body')[0].appendChild(canvas);
-
-        s.width = patternWidth;
-        s.height= patternHeight;
-        s.src = pattern.dataUri;
-        canvas.width = patternWidth;
-        canvas.height= patternHeight;
-
-        s.onload = function(){
-            ctx.drawImage(s,0,0);
-        }
-        document.getElementById("content").innerHTML = canvas.toDataURL('image/png');
-        console.log(canvas.toDataURL());
+        document.getElementById("content").innerHTML = pattern.dataUri;
     </script>
 
     </body>
