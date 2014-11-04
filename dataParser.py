@@ -1,4 +1,4 @@
-import sys,re, base64
+import sys, os, re, base64, ctypes
 import svg_to_png
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
@@ -34,3 +34,8 @@ f.close()
 
 #convert to png from orangepalantir
 svg_to_png.main("temp.svg")
+
+#set wallpaper to background
+SPI_SETDESKWALLPAPER = 20
+ctypes.windll.user32.SystemParametersInfoA(SPI_SETDESKWALLPAPER,0,\
+        str(os.path.abspath(os.path.dirname(sys.argv[0]))) + "/temp.png",0)
