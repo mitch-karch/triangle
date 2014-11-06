@@ -24,18 +24,20 @@ def getHtml(str_url):
 
 #generate a website to use the d3.js code to make the trianglify app.
 #Save the generated image in temp.svg
-webGenServer = "webgen/webapp.html"
-html = getHtml(webGenServer)
-rawData = str(re.search(r"<div.*>(.*,)(.*)<\/div>",html).group(2))
-newBackground = base64.decodestring(rawData)
-f = open("temp.svg", "w")
-f.write(newBackground)
-f.close()
+def main():
+    webGenServer = "webgen/webapp.html"
+    html = getHtml(webGenServer)
+    rawData = str(re.search(r"<div.*>(.*,)(.*)<\/div>",html).group(2))
+    newBackground = base64.decodestring(rawData)
+    f = open("temp.svg", "w")
+    f.write(newBackground)
+    f.close()
 
-#convert to png from orangepalantir
-svg_to_png.main("temp.svg")
+    #convert to png from orangepalantir
+    svg_to_png.main("temp.svg")
 
-#set wallpaper to background
-SPI_SETDESKWALLPAPER = 20
-ctypes.windll.user32.SystemParametersInfoA(SPI_SETDESKWALLPAPER,0,\
-        str(os.path.abspath(os.path.dirname(sys.argv[0]))) + "/temp.png",0)
+    #set wallpaper to background
+    SPI_SETDESKWALLPAPER = 20
+    ctypes.windll.user32.SystemParametersInfoA(SPI_SETDESKWALLPAPER,0,\
+            str(os.path.abspath(os.path.dirname(sys.argv[0]))) + "/temp.png",0)
+
