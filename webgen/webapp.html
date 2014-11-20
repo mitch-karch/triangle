@@ -4,9 +4,64 @@
         <script src="trianglify.js"></script>
 
         <script type="text/javascript">
-            var t = new Trianglify();
+            
+            function makeColorGradient( f1,f2,f3,
+                                        p1,p2,p3,
+                                        c , w, l){
+                if(c==undefined) c = 128;
+                if(w==undefined) w = 128;
+                if(l==undefined) l = 128;
+
+                var cs = [];
+
+                for(var i=0; i<l;i++){
+                    var r = Math.sin(f1*i + p1)*w+c;
+                    var g = Math.sin(f2*i + p2)*w+c;
+                    var b = Math.sin(f3*i + p3)*w+c;
+                    cs[i] = rgb2hex([r,g,b]);
+                }
+                return cs;
+            }
+            
+            function hex(n){
+                n = parseInt(n,10);
+                if(isNaN(n)) return "00";
+                n = Math.max(0,Math.min(n,255));
+                return "0123456789ABCDEF".charAt((n-n%16)/16)
+                      +"0123456789ABCDEF".charAt(n%16);
+            }
+            function rgb2hex(c){
+                return "#"+hex(c[0])+hex(c[1])+hex(c[2]);
+            }
+            
+            function remap(Is, Ie, Os, Oe, input){
+                Ir = Ie - Is;
+                Or = Oe - Os;
+                return (input - Is)*Or/Ir + Os;
+            }
+
+
+            var d = new Date;
+
+            var _1r = Math.floor(((Math.random()*128) + 1)/d.getHours())*d.getHours()
+            var _1g = Math.floor(((Math.random()*128) + 1)/d.getMinutes())*d.getMinutes()
+            var _1b = Math.floor(((Math.random()*128) + 1)/d.getSeconds())*d.getSeconds()
+
+            
+            var _1r = Math.floor(remap(0,24,0,128,d.getHours()));
+            var _1g = Math.floor(remap(0,60,0,128,d.getMinutes()));
+            var _1b = Math.floor(remap(0,60,0,128,d.getSeconds()));
+
+            x = makeColorGradient(.3,.3,.3,0.2,4);
+            var t = new Trianglify({x_gradient:[x[_1r], x[_1g], x[_1b]]});
+            console.log(_1r + ":" + x[_1r]);
+            console.log(_1g + ":" + x[_1g]);
+            console.log(_1b + ":" + x[_1b]);
             var pattern = t.generate(1920,1080);
             document.write(pattern.dataUrl);
+            document.body.setAttribute('style', 'background-image: '+pattern.dataUrl);
         </script>
     </head>
+    <body>
+    </body>
 </html>
