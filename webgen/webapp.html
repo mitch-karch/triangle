@@ -19,7 +19,9 @@
                     var g = Math.sin(f2*i + p2)*w+c;
                     var b = Math.sin(f3*i + p3)*w+c;
                     cs[i] = rgb2hex([r,g,b]);
+                    document.write( '<font color="' + cs[i] + '">&#9608;</font>');
                 }
+//                document.write('<div></div>')
                 return cs;
             }
             
@@ -40,25 +42,21 @@
                 return (input - Is)*Or/Ir + Os;
             }
 
-
             var d = new Date;
-
-            var _1r = Math.floor(((Math.random()*128) + 1)/d.getHours())*d.getHours()
-            var _1g = Math.floor(((Math.random()*128) + 1)/d.getMinutes())*d.getMinutes()
-            var _1b = Math.floor(((Math.random()*128) + 1)/d.getSeconds())*d.getSeconds()
-
-            
             var _1r = Math.floor(remap(0,24,0,128,d.getHours()));
             var _1g = Math.floor(remap(0,60,0,128,d.getMinutes()));
             var _1b = Math.floor(remap(0,60,0,128,d.getSeconds()));
 
-            x = makeColorGradient(.3,.3,.3,0.2,4);
-            var t = new Trianglify({x_gradient:[x[_1r], x[_1g], x[_1b]]});
+            var phase = .03
+            x = makeColorGradient(phase,phase,phase,0,2,4,230,95);
+            //x = makeColorGradient(.3,.3,.3,0,2,4, 150,25);
+            var t = new Trianglify({x_gradient:[x[_1g], x[_1b], x[_1r]]});
+//            var t = new Trianglify({x_gradient:x});
             console.log(_1r + ":" + x[_1r]);
             console.log(_1g + ":" + x[_1g]);
             console.log(_1b + ":" + x[_1b]);
             var pattern = t.generate(1920,1080);
-            document.write(pattern.dataUrl);
+ //           document.write(pattern.dataUrl);
             document.body.setAttribute('style', 'background-image: '+pattern.dataUrl);
         </script>
     </head>
