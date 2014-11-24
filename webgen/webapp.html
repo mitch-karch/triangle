@@ -65,23 +65,23 @@
         </script>
     </head>
     <body>
-        <input type="range" id="abc" onchange=" document.getElementById('red').innerHTML=this.value;
-                                                makeColorGradient(.03,.03,.03,
-                                                                 this.value,
-                                                                 parseInt(document.getElementById('gre').innerHTML),
-                                                                 parseInt(document.getElementById('blu').innerHTML))">
+        <input type="range" id="abc" min="0" max="10" onchange="document.getElementById('red').innerHTML=this.value;
+                                                                makeColorGradient(.03,.03,.03,
+                                                                    this.value,
+                                                                    parseInt(document.getElementById('gre').innerHTML),
+                                                                    parseInt(document.getElementById('blu').innerHTML))">
         </input>
-        <input type="range" id="bca" onchange=" document.getElementById('gre').innerHTML=this.value;
-                                                makeColorGradient(.03,.03,.03,
-                                                                 parseInt(document.getElementById('red').innerHTML),
-                                                                 this.value,
-                                                                 parseInt(document.getElementById('blu').innerHTML))">
+        <input type="range" id="bca" min="0" max="10" onchange="document.getElementById('gre').innerHTML=this.value;
+                                                                makeColorGradient(.03,.03,.03,
+                                                                    parseInt(document.getElementById('red').innerHTML),
+                                                                    this.value,
+                                                                    parseInt(document.getElementById('blu').innerHTML))">
         </input>
-        <input type="range" id="cab" onchange=" document.getElementById('blu').innerHTML=this.value;
-                                                makeColorGradient(.03,.03,.03,
-                                                                 parseInt(document.getElementById('red').innerHTML),
-                                                                 parseInt(document.getElementById('gre').innerHTML),
-                                                                 this.value)">
+        <input type="range" id="cab" min="0" max="10" onchange="document.getElementById('blu').innerHTML=this.value;
+                                                                makeColorGradient(.03,.03,.03,
+                                                                    parseInt(document.getElementById('red').innerHTML),
+                                                                    parseInt(document.getElementById('gre').innerHTML),
+                                                                    this.value)">
         </input>
         <div id="de"></div>
         <div id="red"></div>
