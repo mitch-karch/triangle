@@ -4,6 +4,23 @@
         <script src="trianglify.js"></script>
 
         <script type="text/javascript">
+            function genNewBackground(phase,p1,p2,p3){
+                var d = new Date;
+                var hPos = Math.floor(remap(0,24,0,128,d.getHours()));
+                var mPos = Math.floor(remap(0,60,0,128,d.getMinutes()));
+                var sPos = Math.floor(remap(0,60,0,128,d.getSeconds()));
+
+                var phase = .03
+                x = makeColorGradient(phase,phase,phase,p1,p2,p3) 
+                var t = new Trianglify({
+                        x_gradient:[x[mPos], x[sPos], x[hPos]],
+                        y_gradient:[x[hPos], x[mPos], x[sPos]]
+                        });
+                var pattern = t.generate(1920,1080);
+     //         document.write(pattern.dataUrl);
+                document.body.setAttribute('style', 'background-image: '+pattern.dataUrl);
+
+            }
             
             function makeColorGradient( f1,f2,f3,
                                         p1,p2,p3,
@@ -11,17 +28,20 @@
                 if(c==undefined) c = 128;
                 if(w==undefined) w = 128;
                 if(l==undefined) l = 128;
-
                 var cs = [];
-
                 for(var i=0; i<l;i++){
                     var r = Math.sin(f1*i + p1)*w+c;
                     var g = Math.sin(f2*i + p2)*w+c;
                     var b = Math.sin(f3*i + p3)*w+c;
                     cs[i] = rgb2hex([r,g,b]);
-                    document.write( '<font color="' + cs[i] + '">&#9608;</font>');
                 }
-//                document.write('<div></div>')
+                var fullstring = ""
+                for(var i=0; i<cs.length;i++){
+                    fullstring+='<font color="' + cs[i] + '">&#9608;</font>';
+                }
+                fullstring+="<div></div>"
+                var prev = document.getElementById("de").innerHTML;
+                document.getElementById("de").innerHTML = prev += fullstring;
                 return cs;
             }
             
@@ -42,24 +62,30 @@
                 return (input - Is)*Or/Ir + Os;
             }
 
-            var d = new Date;
-            var _1r = Math.floor(remap(0,24,0,128,d.getHours()));
-            var _1g = Math.floor(remap(0,60,0,128,d.getMinutes()));
-            var _1b = Math.floor(remap(0,60,0,128,d.getSeconds()));
-
-            var phase = .03
-            x = makeColorGradient(phase,phase,phase,0,2,4,230,95);
-            //x = makeColorGradient(.3,.3,.3,0,2,4, 150,25);
-            var t = new Trianglify({x_gradient:[x[_1g], x[_1b], x[_1r]]});
-//            var t = new Trianglify({x_gradient:x});
-            console.log(_1r + ":" + x[_1r]);
-            console.log(_1g + ":" + x[_1g]);
-            console.log(_1b + ":" + x[_1b]);
-            var pattern = t.generate(1920,1080);
- //           document.write(pattern.dataUrl);
-            document.body.setAttribute('style', 'background-image: '+pattern.dataUrl);
         </script>
     </head>
     <body>
+        <input type="range" id="abc" onchange=" document.getElementById('red').innerHTML=this.value;
+                                                makeColorGradient(.03,.03,.03,
+                                                                 this.value,
+                                                                 parseInt(document.getElementById('gre').innerHTML),
+                                                                 parseInt(document.getElementById('blu').innerHTML))">
+        </input>
+        <input type="range" id="bca" onchange=" document.getElementById('gre').innerHTML=this.value;
+                                                makeColorGradient(.03,.03,.03,
+                                                                 parseInt(document.getElementById('red').innerHTML),
+                                                                 this.value,
+                                                                 parseInt(document.getElementById('blu').innerHTML))">
+        </input>
+        <input type="range" id="cab" onchange=" document.getElementById('blu').innerHTML=this.value;
+                                                makeColorGradient(.03,.03,.03,
+                                                                 parseInt(document.getElementById('red').innerHTML),
+                                                                 parseInt(document.getElementById('gre').innerHTML),
+                                                                 this.value)">
+        </input>
+        <div id="de"></div>
+        <div id="red"></div>
+        <div id="gre"></div>
+        <div id="blu"></div>
     </body>
 </html>
