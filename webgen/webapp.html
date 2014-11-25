@@ -8,18 +8,20 @@
                 var d = new Date;
                 var hPos = Math.floor(remap(0,24,0,128,d.getHours()));
                 var mPos = Math.floor(remap(0,60,0,128,d.getMinutes()));
-                var sPos = Math.floor(remap(0,60,0,128,d.getSeconds()));
+                //var sPos = Math.floor(remap(0,60,0,128,d.getSeconds()));
+                var sPos = Math.floor(d.getSeconds()+60);
 
                 var phase = .03
                 x = makeColorGradient(phase,phase,phase,p1,p2,p3) 
                 var t = new Trianglify({
-                        x_gradient:[x[mPos], x[sPos], x[hPos]],
+                        x_gradient:[x[hPos], x[mPos], x[sPos]],
                         y_gradient:[x[hPos], x[mPos], x[sPos]]
                         });
                 var pattern = t.generate(1920,1080);
-     //         document.write(pattern.dataUrl);
+                document.write(pattern.dataUrl);
                 document.body.setAttribute('style', 'background-image: '+pattern.dataUrl);
-
+                console.log(x[hPos], x[mPos], x[sPos])
+                console.log(hPos, mPos, sPos)
             }
             
             function makeColorGradient( f1,f2,f3,
@@ -35,6 +37,10 @@
                     var b = Math.sin(f3*i + p3)*w+c;
                     cs[i] = rgb2hex([r,g,b]);
                 }
+                return cs;
+            }
+            
+            function colorDebugString(cs){
                 var fullstring = ""
                 for(var i=0; i<cs.length;i++){
                     fullstring+='<font color="' + cs[i] + '">&#9608;</font>';
@@ -42,9 +48,7 @@
                 fullstring+="<div></div>"
                 var prev = document.getElementById("de").innerHTML;
                 document.getElementById("de").innerHTML = prev += fullstring;
-                return cs;
             }
-            
             function hex(n){
                 n = parseInt(n,10);
                 if(isNaN(n)) return "00";
@@ -61,31 +65,37 @@
                 Or = Oe - Os;
                 return (input - Is)*Or/Ir + Os;
             }
-
+            genNewBackground(.03,3,2,5);
         </script>
     </head>
     <body>
-        <input type="range" id="abc" min="0" max="10" onchange="document.getElementById('red').innerHTML=this.value;
+    <!-- Uncomment this to play with different colors
+        R:<input type="range" id="abc" min="0" max="10" onchange="document.getElementById('red').innerHTML=this.value;
                                                                 makeColorGradient(.03,.03,.03,
                                                                     parseInt(this.value),
                                                                     parseInt(document.getElementById('gre').innerHTML),
                                                                     parseInt(document.getElementById('blu').innerHTML))">
         </input>
-        <input type="range" id="bca" min="0" max="10" onchange="document.getElementById('gre').innerHTML=this.value;
+        <span id="red"></span>
+        <br>
+        G:<input type="range" id="bca" min="0" max="10" onchange="document.getElementById('gre').innerHTML=this.value;
                                                                 makeColorGradient(.03,.03,.03,
                                                                     parseInt(document.getElementById('red').innerHTML),
                                                                     parseInt(this.value),
                                                                     parseInt(document.getElementById('blu').innerHTML))">
         </input>
-        <input type="range" id="cab" min="0" max="10" onchange="document.getElementById('blu').innerHTML=this.value;
+        <span id="gre"></span>
+        <br>
+        B:<input type="range" id="cab" min="0" max="10" onchange="document.getElementById('blu').innerHTML=this.value;
                                                                 makeColorGradient(.03,.03,.03,
                                                                     parseInt(document.getElementById('red').innerHTML),
                                                                     parseInt(document.getElementById('gre').innerHTML),
                                                                     parseInt(this.value))">
         </input>
-        <div id="de"></div>
-        <div id="red"></div>
-        <div id="gre"></div>
-        <div id="blu"></div>
+        <span id="blu"></span>
+        <br>
+        <input type="button" onclick="document.getElementById('de').innerHTML = ''" value="Reset"></input>
+    <!-- -->
+        <span id="de"></span>
     </body>
 </html>
