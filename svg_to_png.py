@@ -36,5 +36,3 @@ class MyView(QtGui.QGraphicsView):
 def main(arg1):
     app = QtGui.QApplication(sys.argv)
     db = MyView(arg1)
-    db.show()
-    #sys.exit(app.exec_())
