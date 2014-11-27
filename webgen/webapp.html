@@ -2,17 +2,117 @@
     <head>
         <script src="d3.min.js"></script> 
         <script src="trianglify.js"></script>
+        <script type="text/javascript">
+            function genNewBackground(phzse,p1,p2,p3){
+                var d = new Date;
+                var hPos = Math.floor(remap(0,24,0,128,d.getHours()));
+                var sPos = Math.floor(remap(0,60,0,128,d.getSeconds()));
+                var mPos = Math.floor(d.getMinutes()+60);
+                x = makeColorGradient(phzse,phzse,phzse,p1,p2,p3) 
+                var t = new Trianglify({
+                        x_gradient:[x[hPos], x[mPos], x[sPos]],
+                        y_gradient:[x[mPos], x[sPos], x[hPos]]
+                        });
+                var pattern = t.generate(1920,1080);
+                document.write(pattern.dataUrl);
+                //Debugging Information
+                /*document.body.setAttribute('style', 'background-image: '+pattern.dataUrl);
+                console.log("H:"+d.getHours()  + "->" + hPos + "->" + x[hPos]);
+                console.log("M:"+d.getMinutes()  + "->" + mPos + "->" + x[mPos]);
+                console.log("S:"+d.getSeconds()  + "->" + sPos + "->" + x[sPos]);
+                /**/
+            }
+            
+            function makeColorGradient(f1,f2,f3,p1,p2,p3,c,w,l){
+                if(c==undefined) c = 128;
+                if(w==undefined) w = 128;
+                if(l==undefined) l = 128;
+                cs = [];
+                for(var i=0; i<l;i++){
+                    var r = Math.sin(f1*i + p1)*w+c;
+                    var g = Math.sin(f2*i + p2)*w+c;
+                    var b = Math.sin(f3*i + p3)*w+c;
+                    cs[i] = rgb2hex([r,g,b]);
+                }
+                //colorDebugString(cs);
+                return cs;
+            }
+            
+            function colorDebugString(cs){
+                var fullstring = ""
+                for(var i=0; i<cs.length;i++){
+                    fullstring+='<font color="' + cs[i] + '">&#9608;</font>';
+                }
+                fullstring+="<div></div>";
+                var prev = document.getElementById("de").innerHTML;
+                document.getElementById("de").innerHTML = prev += fullstring;
+            }
+            function hex(n){
+                n = parseInt(n,10);
+                if(isNaN(n)) return "00";
+                n = Math.max(0,Math.min(n,255));
+                return "0123456789ABCDEF".charAt((n-n%16)/16)
+                      +"0123456789ABCDEF".charAt(n%16);
+            }
+            function rgb2hex(c){return "#"+hex(c[0])+hex(c[1])+hex(c[2]);}
+            
+            function remap(Is, Ie, Os, Oe, input){
+                Ir = Ie - Is;
+                Or = Oe - Os;
+                return (input - Is)*Or/Ir + Os;
+            }
+            
+            function phaseShift(){
+                for(var i=0; i <50;++i){
+                    (makeColorGradient(i*.01,i*.01,i*.01,2,4,6,200,85));
+                    console.log(i);
+                }
+            }
+           //
+        </script>
     </head>
-    <body>
-   <div id="content"></div>
-
-     <script type="text/javascript">
-        var patternWidth = 1920;
-        var patternHeight= 1080;
-        var t = new Trianglify();
-        var pattern = t.generate(patternWidth,patternHeight);
-        document.getElementById("content").innerHTML = pattern.dataUri;
-    </script>
-
+    <body onload="genNewBackground(.06,2,4,6,200,85);">
+        <!-- Debugging Information 
+        R:<input type="range" id="abc" min="0" max="10" onchange="document.getElementById('red').innerHTML=this.value;
+                                                                makeColorGradient(document.getElementById('phz').innerHTML,
+                                                                                  document.getElementById('phz').innerHTML,
+                                                                                  document.getElementById('phz').innerHTML,
+                                                                    parseInt(this.value),
+                                                                    parseInt(document.getElementById('gre').innerHTML),
+                                                                    parseInt(document.getElementById('blu').innerHTML))">
+        </input>
+        <span id="red"></span>
+        <br>
+        G:<input type="range" id="bca" min="0" max="10" onchange="document.getElementById('gre').innerHTML=this.value;
+                                                                makeColorGradient(document.getElementById('phz').innerHTML,
+                                                                                  document.getElementById('phz').innerHTML,
+                                                                                  document.getElementById('phz').innerHTML,
+                                                                    parseInt(document.getElementById('red').innerHTML),
+                                                                    parseInt(this.value),
+                                                                    parseInt(document.getElementById('blu').innerHTML))">
+        </input>
+        <span id="gre"></span>
+        <br>
+        B:<input type="range" id="cab" min="0" max="10" onchange="document.getElementById('blu').innerHTML=this.value;
+                                                                makeColorGradient(document.getElementById('phz').innerHTML,
+                                                                                  document.getElementById('phz').innerHTML,
+                                                                                  document.getElementById('phz').innerHTML,
+                                                                    parseInt(document.getElementById('red').innerHTML),
+                                                                    parseInt(document.getElementById('gre').innerHTML),
+                                                                    parseInt(this.value))">
+        </input>
+        <span id="blu"></span>
+        <br>
+        P:<input type="range" id="phs" min="0" max="1" step=".01" value=".05" onchange="document.getElementById('phz').innerHTML=this.value;
+                                                                makeColorGradient(this.value,this.value,this.value,
+                                                                    parseInt(document.getElementById('red').innerHTML),
+                                                                    parseInt(document.getElementById('gre').innerHTML),
+                                                                    parseInt(document.getElementById('blu').innerHTML))">
+        </input>
+        <span id="phz"></span>
+        <br>
+        <input type="button" onclick="document.getElementById('de').innerHTML = ''" value="Reset"></input>
+        <div id="de"> </div>
+        -->
     </body>
 </html>
