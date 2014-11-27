@@ -1,7 +1,8 @@
-import sys, os, re, base64, ctypes, svg_to_png
+import sys, os, re, base64, svg_to_png
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 from PyQt4.QtWebKit import *
+from ctypes import windll
 
 #Scraper code from josechristian.com
 class Render(QWebPage):  
@@ -37,7 +38,7 @@ def main():
 
     #set wallpaper to background
     SPI_SETDESKWALLPAPER = 20
-    ctypes.windll.user32.SystemParametersInfoA(SPI_SETDESKWALLPAPER,0,\
+    windll.user32.SystemParametersInfoA(SPI_SETDESKWALLPAPER,0,\
             str(os.path.abspath(os.path.dirname(sys.argv[0]))) + "/temp.png",0)
 
 main()
