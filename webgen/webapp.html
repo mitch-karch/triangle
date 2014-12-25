@@ -14,7 +14,8 @@
                         y_gradient:[x[mPos], x[sPos], x[hPos]]
                         });
                 var pattern = t.generate(1920,1080);
-                document.write(pattern.dataUrl);
+                document.getElementById("content").innerHTML = pattern.base64;
+                //document.write(pattern.base64);
                 //Debugging Information
                 /*document.body.setAttribute('style', 'background-image: '+pattern.dataUrl);
                 console.log("H:"+d.getHours()  + "->" + hPos + "->" + x[hPos]);
@@ -68,51 +69,11 @@
                     console.log(i);
                 }
             }
-           //
         </script>
     </head>
     <body onload="genNewBackground(.06,2,4,6,200,85);">
-        <!-- Debugging Information 
-        R:<input type="range" id="abc" min="0" max="10" onchange="document.getElementById('red').innerHTML=this.value;
-                                                                makeColorGradient(document.getElementById('phz').innerHTML,
-                                                                                  document.getElementById('phz').innerHTML,
-                                                                                  document.getElementById('phz').innerHTML,
-                                                                    parseInt(this.value),
-                                                                    parseInt(document.getElementById('gre').innerHTML),
-                                                                    parseInt(document.getElementById('blu').innerHTML))">
-        </input>
-        <span id="red"></span>
-        <br>
-        G:<input type="range" id="bca" min="0" max="10" onchange="document.getElementById('gre').innerHTML=this.value;
-                                                                makeColorGradient(document.getElementById('phz').innerHTML,
-                                                                                  document.getElementById('phz').innerHTML,
-                                                                                  document.getElementById('phz').innerHTML,
-                                                                    parseInt(document.getElementById('red').innerHTML),
-                                                                    parseInt(this.value),
-                                                                    parseInt(document.getElementById('blu').innerHTML))">
-        </input>
-        <span id="gre"></span>
-        <br>
-        B:<input type="range" id="cab" min="0" max="10" onchange="document.getElementById('blu').innerHTML=this.value;
-                                                                makeColorGradient(document.getElementById('phz').innerHTML,
-                                                                                  document.getElementById('phz').innerHTML,
-                                                                                  document.getElementById('phz').innerHTML,
-                                                                    parseInt(document.getElementById('red').innerHTML),
-                                                                    parseInt(document.getElementById('gre').innerHTML),
-                                                                    parseInt(this.value))">
-        </input>
-        <span id="blu"></span>
-        <br>
-        P:<input type="range" id="phs" min="0" max="1" step=".01" value=".05" onchange="document.getElementById('phz').innerHTML=this.value;
-                                                                makeColorGradient(this.value,this.value,this.value,
-                                                                    parseInt(document.getElementById('red').innerHTML),
-                                                                    parseInt(document.getElementById('gre').innerHTML),
-                                                                    parseInt(document.getElementById('blu').innerHTML))">
-        </input>
-        <span id="phz"></span>
-        <br>
-        <input type="button" onclick="document.getElementById('de').innerHTML = ''" value="Reset"></input>
-        <div id="de"> </div>
-        -->
+           
+        <div id="content"></div>
+        
     </body>
 </html>

@@ -1,4 +1,4 @@
-import sys, os, re, base64, svg_to_png
+import sys, os, re, base64, svg_to_png, time
 from PyQt4.QtGui import *
 from PyQt4.QtCore import *
 from PyQt4.QtWebKit import *
@@ -25,9 +25,9 @@ def getHtml(str_url):
 #generate a website to use the d3.js code to make the trianglify app.
 #Save the generated image in temp.svg
 def main():
-    webGenServer = "webgen/webapp.html"
+    webGenServer = "file:///"+os.path.abspath(os.path.dirname(sys.argv[0])).replace("\\","/")+"/webgen/webapp.html"
     html = getHtml(webGenServer)
-    rawData = str(re.search(r"<div.*>(.*,)(.*)<\/div>",html).group(2))
+    rawData = str(re.search(r"<div id=\"content\">(.*)<\/div>",html).group(1))
     newBackground = base64.decodestring(rawData)
     f = open("temp.svg", "w")
     f.write(newBackground)
