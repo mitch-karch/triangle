@@ -177,7 +177,8 @@
                         y_gradient:[x[mPos], x[sPos], x[hPos]]
                         });
                 var pattern = t.generate(1920,1080);
-                document.getElementById("content").innerHTML = pattern.base64;
+                return pattern.base64;
+                //document.getElementById("content").innerHTML = pattern.base64;
                 //document.write(pattern.base64);
                 //Debugging Information
                     //document.body.setAttribute('style', 'background-image: '+pattern.dataUrl);
